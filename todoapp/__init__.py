@@ -80,5 +80,20 @@ def delete(id):
         return 'Something went wrong! :('
 
 
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    '''Handles editing of tasks (both view and form submission)'''
+    task = Todo.query.get_or_404(id)
+    if request.method == 'POST':
+        task.content = request.form['content']
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'Something went wrong! :('
+    else:
+        return render_template('edit.html.j2', task=task)
+
+
 def serve():
     app.run(debug=True, host='0.0.0.0', port=5000)
