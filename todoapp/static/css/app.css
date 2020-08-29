@@ -23,6 +23,28 @@ h5 {
   align-items: center;
 }
 
+.todo {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.unchecked {
+  background: url("../img/checkmark-unchecked.png");
+}
+
+.unchecked:hover {
+  background: url("../img/checkmark-checked.png");
+}
+
+.checked {
+  background: url("../img/checkmark-checked.png");
+}
+
+.checked:hover {
+  background: url("../img/checkmark-unchecked.png");
+}
+
 .divider {
   margin: 1em 0em;
   width: 500px;

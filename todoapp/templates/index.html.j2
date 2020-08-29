@@ -24,14 +24,18 @@
         {% for task in tasks %}
           <tr>
             <td>
-              <a class="button">Done!</a>
+            {% if task.date_completed is none %}
+              <a class="todo unchecked" href="/complete/{{ task.id }}"></a>
+            {% else %}
+              <a class="todo checked" href="/uncomplete/{{ task.id }}"></a>
+            {% endif %}
             </td>
             <td>{{ task.content }}</td>
-            <td>{{ task.date_created.strftime("%d-%b-%Y (%H:%M:%S.%f)") }} </td>
-            {% if task.date_completed.strftime("%d-%b-%Y") == "01-Jan-2000" %}
+            <td>{{ task.date_created.strftime("%d-%b-%Y (%H:%M:%S)") }} </td>
+            {% if task.date_completed is none %}
             <td></td>
             {% else %}
-            <td>{{ task.date_completed.strftime("%d-%b-%Y (%H:%M:%S.%f)") }}</td>
+            <td>{{ task.date_completed.strftime("%d-%b-%Y (%H:%M:%S)") }}</td>
             {% endif %}
             <td>
               <a class="button" href="/edit/{{task.id}}">Edit</a>
@@ -54,6 +58,7 @@
   <div id="footer">
     <p>UNIWA - Department of Electrical and Electronic Engineering - Cloud Computing Class</p>
     <p>Author: Thanasis Georgiou - ee06664 (at) uniwa.gr</p>
+    <p><a target="_blank" href="https://icons8.com/icons/set/--checkmark-yes">Checkmark Yes icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></p>
   </div>
 
 </div>

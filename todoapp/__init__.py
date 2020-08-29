@@ -44,5 +44,29 @@ def handle_form():
         return 'Something went wrong! :('
 
 
+@app.route('/complete/<int:id>')
+def complete(id):
+    '''Marks a task done by the ID'''
+    task = Todo.query.get_or_404(id)
+    try:
+        task.date_completed = datetime.utcnow()
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Something went wrong! :('
+
+
+@app.route('/uncomplete/<int:id>')
+def uncomplete(id):
+    '''Marks a task undone by the ID'''
+    task = Todo.query.get_or_404(id)
+    try:
+        task.date_completed = None
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Something went wrong! :('
+
+
 def serve():
     app.run(debug=True, host='0.0.0.0', port=5000)
