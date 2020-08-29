@@ -17,6 +17,9 @@ You can install the dependencies using pip and then run the app, either using
 > gunicorn todoapp:app
 ```
 
+## Demo
+You can check the app at [Heroku](https://uniwa-cc-todoapp.herokuapp.com/).
+
 ## License
 This app was written for the purposes of the class, feel free to use the code
 for whenever reason. For the legalise check ![License.md].
