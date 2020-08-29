@@ -20,6 +20,13 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
+# HACK Run create_all here so the database gets created on heroku
+# since each dyno runs with a different disk, running an 'init' task
+# creates a disk that gets lost. This will ensure each run has a database
+# to work with.
+db.create_all()
+
+
 @app.route('/', methods=['GET'])
 def index():
     '''
