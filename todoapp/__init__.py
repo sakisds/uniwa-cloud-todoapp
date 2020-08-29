@@ -1,6 +1,6 @@
 from datetime import datetime, date
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -20,9 +20,28 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
-@app.route("/")
-def root():
-    return render_template('index.html.j2')
+@app.route('/', methods=['GET'])
+def index():
+    '''
+    Returns the main app screen filled with any created tasks.
+    '''
+    tasks = Todo.query.order_by(Todo.date_created).all()
+    return render_template('index.html.j2', tasks=tasks)
+
+
+@app.route('/', methods=['POST'])
+def handle_form():
+    '''
+    Creates a new task on form submission
+    '''
+    content = request.form['content']
+    task = Todo(content=content)
+    try:
+        db.session.add(task)
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Something went wrong! :('
 
 
 def serve():

@@ -3,5 +3,58 @@
 <title>TODO App - Main page</title>
 {% endblock %}
 {% block body %}
-<h1>Content: index.html</h1>
+<div class="container">
+  <h1>ToDo App</h1>
+
+  <div id="todo-list">
+    {% if tasks|length < 1 %}
+    <h5>There are no tasks. Create one below!</h5>
+    {% else %}
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Task</th>
+          <th>Created on</th>
+          <th>Completed on</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+          <tr>
+            <td>
+              <a class="button">Done!</a>
+            </td>
+            <td>{{ task.content }}</td>
+            <td>{{ task.date_created.strftime("%d-%b-%Y (%H:%M:%S.%f)") }} </td>
+            {% if task.date_completed.strftime("%d-%b-%Y") == "01-Jan-2000" %}
+            <td></td>
+            {% else %}
+            <td>{{ task.date_completed.strftime("%d-%b-%Y (%H:%M:%S.%f)") }}</td>
+            {% endif %}
+            <td>
+              <a class="button" href="/edit/{{task.id}}">Edit</a>
+              <a class="button" href="/delete/{{task.id}}">Delete</a>
+            </td>
+          </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="divider">
+    </div>
+
+    <form id="add-todo-form" action="/" method="POST">
+      <input class="input-field" type="text" name="content" id="content">
+      <input class="button-primary" type="submit" value="Add Task">
+    </form>
+  </div>
+
+  <div id="footer">
+    <p>UNIWA - Department of Electrical and Electronic Engineering - Cloud Computing Class</p>
+    <p>Author: Thanasis Georgiou - ee06664 (at) uniwa.gr</p>
+  </div>
+
+</div>
 {% endblock %}
