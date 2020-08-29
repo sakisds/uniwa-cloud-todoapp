@@ -14,7 +14,7 @@ class Todo(db.Model):
     content = db.Column(db.String(200), nullable=False)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
-    date_completed = db.Column(db.DateTime, default=date(2000, 1, 1))
+    date_completed = db.Column(db.DateTime, default=None)
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -62,6 +62,18 @@ def uncomplete(id):
     task = Todo.query.get_or_404(id)
     try:
         task.date_completed = None
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'Something went wrong! :('
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    '''Deletes a task'''
+    task = Todo.query.get_or_404(id)
+    try:
+        db.session.delete(task)
         db.session.commit()
         return redirect('/')
     except:
