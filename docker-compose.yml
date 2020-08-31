@@ -1,0 +1,16 @@
+version: 1.1.0
+services:
+  app:
+    image: todoapp:1.1.0
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE=postgresql+psycopg2://todoapp_user:docker@database:5432/todoapp_db
+    links:
+      - database
+  database:
+    image: postgres:12.3
+    environment:
+      - POSTGRES_USER=todoapp_user
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=todoapp_db
